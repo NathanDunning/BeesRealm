@@ -1,5 +1,6 @@
 .page {
   background-color: #2c2e30;
+  height: 100%;
 }
 
 .header {
@@ -17,8 +18,18 @@
   text-align: center;
 }
 
+.mainframe {
+  height: 100%;
+  align-items: stretch;
+}
+
 .heading {
   color: #adadad;
   font-family: 'Helvetica Neue', sans-serif;
+  text-align: center;
+}
+
+.button-row {
+  padding: '1rem';
   text-align: center;
 }

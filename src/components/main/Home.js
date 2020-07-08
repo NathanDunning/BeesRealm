@@ -46,7 +46,7 @@ const Home = () => {
             </Col>
           </Row>
           <Row>
-            <Col style={{ padding: '1rem' }}>
+            <Col className='button-row'>
               <Button variant='info' href='/play'>
                 Play Now
               </Button>
