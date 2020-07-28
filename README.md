@@ -1,66 +1,67 @@
-## Available Scripts
+# TEMP
 
-In the project directory, you can run:
 
-### `yarn start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+# Phaser 3 React Webpack Project Template
 
-### `yarn test`
+Built from the [https://github.com/photonstorm/phaser3-project-template](Phaser 3 Template), this boilerplate gives you Phaser and React out of the box. Full details on [Integrating React and Phaser 3 Tutorial](https://medium.com/@Tnodes/integrating-react-and-phaser-3-tutorial-eb96717d4a9d). 
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ES6 support via [Babel 7](https://babeljs.io/) and [Webpack 4](https://webpack.js.org/). Includes hot-reloading for development and production-ready builds.
 
-### `yarn build`
+Loading images via JavaScript module `import` is also supported.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Quickstart
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+`git clone https://github.com/nodes777/phaser3-react-template`
+`npm install`
+`npm start`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Requirements
 
-### `yarn eject`
+[Node.js](https://nodejs.org) is required to install dependencies and run scripts via `npm`.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Available Commands
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+| Command | Description |
+|---------|-------------|
+| `npm install` | Install project dependencies |
+| `npm start` | Build project and open web server running project |
+| `npm run build` | Builds code bundle with production settings (minification, uglification, etc..) |
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Writing Code
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+After cloning the repo, run `npm install` from your project directory. Then, you can start the local development
+server by running `npm start`.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+After starting the development server with `npm start`, you can edit any files in the `src` folder
+and webpack will automatically recompile and reload your server (available at `http://localhost:8080`
+by default).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Customizing Template
 
-### Code Splitting
+### Babel
+You can write modern ES6+ JavaScript and Babel will transpile it to a version of JavaScript that you
+want your project to support. The targeted browsers are set in the `.babelrc` file and the default currently
+targets all browsers with total usage over "0.25%" but excludes IE11 and Opera Mini.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+  ```
+  "browsers": [
+    ">0.25%",
+    "not ie 11",
+    "not op_mini all"
+  ]
+  ```
 
-### Analyzing the Bundle Size
+### Webpack
+If you want to customize your build, such as adding a new webpack loader or plugin (i.e. for loading CSS or fonts), you can
+modify the `webpack/base.js` file for cross-project changes, or you can modify and/or create
+new configuration files and target them in specific npm tasks inside of `package.json'.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+## Deploying Code
+After you run the `npm run build` command, your code will be built into a single bundle located at 
+`dist/bundle.min.js` along with any other assets you project depended. 
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+If you put the contents of the `dist` folder in a publicly-accessible location (say something like `http://mycoolserver.com`), 
+you should be able to open `http://mycoolserver.com/index.html` and play your game.

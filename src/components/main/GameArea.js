@@ -1,20 +1,23 @@
-import React, { Component } from 'react';
-import { Stage, Sprite } from '@inlet/react-pixi';
+import React from "react";
+import Phaser from "phaser";
+import GameScene from '../../phaser/scenes/GameScene'
+import { IonPhaser } from '@ion-phaser/react'
 
-class GameArea extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
+//IMPORT MENU SCENE
+let config = new Phaser.Game({
+  type: Phaser.AUTO,
+  parent: "phaser",
+  width: 1600,
+  height: 800,
+  scene: [
+    GameScene
+  ],
+  render: {
+    pixelArt: true
   }
+})
 
-  render() {
-    return (
-      <Stage>
-        <Sprite image='../../assets/images/bee.png' />
-      </Stage>
-    );
-  }
+
+export default GameArea = () => {
+  return <IonPhaser game={config} />
 }
-
-export default GameArea;
