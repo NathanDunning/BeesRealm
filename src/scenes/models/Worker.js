@@ -1,12 +1,14 @@
-export class Worker extends Phaser.Physics.Arcade.Sprite {
+import { Bee } from "./Bee"
+
+export class Worker extends Bee {
     /**
      * @param {Phaser.Scene} scene 
      * @param {number} x 
      * @param {number} y 
      * @param {string | number} frame 
      */
-    constructor(scene, x, y, frame) {
-        super(scene, x, y, "worker", frame)
+    constructor(scene) {
+        super(scene, "worker")
         scene.sys.updateList.add(this)
         scene.sys.displayList.add(this)
         this.setOrigin(0, 0)

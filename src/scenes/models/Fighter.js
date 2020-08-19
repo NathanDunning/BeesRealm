@@ -1,12 +1,14 @@
-export class Fighter extends Phaser.Physics.Arcade.Sprite {
+import { Bee } from "./Bee"
+
+export class Fighter extends Bee {
     /**
      * @param {Phaser.Scene} scene 
      * @param {number} x 
      * @param {number} y 
      * @param {string | number} frame 
      */
-    constructor(scene, x, y, frame) {
-        super(scene, x, y, "fighter", frame)
+    constructor(scene) {
+        super(scene, "fighter")
         scene.sys.updateList.add(this)
         scene.sys.displayList.add(this)
         this.setOrigin(0, 0)

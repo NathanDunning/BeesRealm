@@ -7,7 +7,6 @@ import * as _ from 'lodash'
 
 export default class GameScene extends Phaser.Scene {
     CodeHandler = new CodeHandler()
-    spawnTile = {}
     workers = [];
 
 
@@ -70,7 +69,7 @@ export default class GameScene extends Phaser.Scene {
         spawn.layer.data.forEach((row, ridx) => {
             row.forEach((col, cidx) => {
                 if (col.index !== -1) {
-                    this.spawnTile = {
+                    global.spawnTile = {
                         width: col.width,
                         height: col.height,
                         x: col.x,
@@ -83,7 +82,7 @@ export default class GameScene extends Phaser.Scene {
         })
 
         //add initial bee
-        let workerBee = new Worker(this, this.spawnTile.xPixel, this.spawnTile.yPixel, null)
+        let workerBee = new Worker(this)
         this.workers.push({
             id: _.uniqueId(),
             object: workerBee
@@ -103,6 +102,7 @@ export default class GameScene extends Phaser.Scene {
         this.keyboard = this.input.keyboard.addKeys("W, A, S, D")
 
         this.scene.launch(CST.SCENES.INTRODUCTION)
+        this.scene.pause(CST.SCENES.GAME)
     }
 
     update(time, delta) {
