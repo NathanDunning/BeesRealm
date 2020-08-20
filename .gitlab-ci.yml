@@ -1,0 +1,60 @@
+image: "node:12.6.0"
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .npm/
+  
+stages:
+  - install
+  - build
+  - deploy
+
+variables:
+  AWS_DEFAULT_REGION: ap-southeast-2
+  BUCKET_NAME: beesrealm
+
+# Install AWS CLI
+before_script:
+   - apt update
+   - apt install -y curl unzip
+   - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+   - unzip awscliv2.zip
+   - ./aws/install
+   - npm ci --cache .npm --prefer-offline
+
+installDependencies:
+  tags:
+    - docker
+  stage: install
+  script:
+    - npm install
+  only: 
+    - master
+  
+buildProject:  # A job to build the static website
+  tags:
+    - docker
+  stage: build
+  script:
+    - npm run build
+    - mkdir build
+    - mv dist/* build/
+    - cp -r assets/* build/
+  artifacts:
+    paths:
+      - build/
+  only: 
+    - master
+
+deployToS3:
+  tags:
+    - docker
+  stage: deploy
+  script:
+    - aws s3 rm s3://beesrealm/ --recursive
+    - aws s3 cp build/ s3://beesrealm --recursive
+  environment:
+    name: production
+    url: http://${BUCKET_NAME}.s3-website-${AWS_DEFAULT_REGION}.amazonaws.com
+  only:
+    - master
