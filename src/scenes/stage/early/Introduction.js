@@ -1,58 +1,106 @@
 import 'phaser'
-import { CST } from '../../../CST'
+import CodeHandler from '../../../utils/CodeHandler'
+import { CST } from "../../../CST"
+import { Worker } from "../../../models/Worker";
+import * as _ from 'lodash'
 
-export default class GameScene extends Phaser.Scene {
+export default class Introduction extends Phaser.Scene {
+    worker;
+
+
     constructor() {
-        super({ key: CST.SCENES.INTRODUCTION })
-        this.parent = parent;
+        super({ key: CST.SCENES.GAME })
     }
 
     preload() {
-        this.load.image("scroll", "/assets/image/scroll.png")
-        this.load.image("okay", "/assets/image/okay.png")
+        // Map
+        this.load.image("grass", "./assets/image/grass.png")
+        this.load.image("wall", "./assets/image/wall.png")
+        this.load.image("spawn", "./assets/image/spawn.png")
+        this.load.image("pollen", "./assets/image/pollen.png")
+        this.load.tilemapTiledJSON("map", "./assets/maps/map.json")
+
+        // Models
+        this.load.spritesheet("gatherer", "./assets/sprite/gatherer.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        })
+        this.load.spritesheet("worker", "./assets/sprite/worker.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        })
+        this.load.spritesheet("fighter", "./assets/sprite/fighter.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        })
+        this.load.spritesheet("queen", "./assets/sprite/queen.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        })
+
+        this.anims.create({
+            key: "fly",
+            frameRate: 4,
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers("worker", {
+                frames: [0, 1, 2, 3, 4]
+            })
+        })
+
+
     }
 
     create() {
-        // Loading the scroll
-        //
-        // find center
-        let centerX = this.game.config.width / 2
-        let centerY = this.game.config.height / 2
+        //map
+        let map = this.add.tilemap("map")
+        let grassTile = map.addTilesetImage("grass")
+        let wallTile = map.addTilesetImage("wall")
+        let spawnTile = map.addTilesetImage("spawn")
+        let pollenTile = map.addTilesetImage("pollen")
 
-        // add scroll
-        var scroll = this.add.image(centerX, centerY, "scroll").setDepth(2).setScale(0.5)
+        //layers
+        let grass = map.createStaticLayer("grass", [grassTile], 0, 0).setDepth(-1);
+        let pollen = map.createStaticLayer("pollen", [pollenTile], 0, 0).setDepth(-1);
+        let wall = map.createStaticLayer("wall", [wallTile], 0, 0).setDepth(-1);
+        let spawn = map.createStaticLayer("spawn", [spawnTile], 0, 0).setDepth(-1);
 
-        // add button
-        //FIXME: Can button anchoring later
-        var button = this.add.image(centerX, centerY + 240, "okay").setDepth(3)
-        button.setInteractive()
-        button.on("pointerup", () => {
-            this.scene.resume(CST.SCENES.GAME)
-            this.scene.stop(CST.SCENES.INTRODUCTION)
+        spawn.layer.data.forEach((row, ridx) => {
+            row.forEach((col, cidx) => {
+                if (col.index !== -1) {
+                    global.spawnTile = {
+                        width: col.width,
+                        height: col.height,
+                        x: col.x,
+                        y: col.y,
+                        xPixel: col.pixelX,
+                        yPixel: col.pixelY
+                    }
+                }
+            })
         })
 
-        // add text
-        const sceneText = 'Welcome to BeesRealm \n\nThe objective of this game is to manage your own colony of bees.\n\nThere are 4 categories of bees. Gatherer - objective is to collect pollen.\nWorker - objective is to build or destroy structures\nFighter - objective is to defend colony\nQueen - an overseer that can provide passive or active boosts.\n\nPollen can be identified by the red tiles on the map'
+        //add initial bee
+        this.worker = new Worker(this)
 
-        var textConfig = {
-            fontSize: '20px',
-            color: '#000000',
-            fontFamily: 'Arial',
+        //collisions
+        this.physics.add.collider(this.worker, wall)
+        wall.setCollisionByProperty({ collides: true })
 
-        };
-        console.log(scroll)
-        this.add.text(
-            scroll.getTopLeft().x + 60,
-            scroll.getTopLeft().y + scroll.width / 10,
-            sceneText,
-            textConfig
-        )
-            .setDepth(3)
-            .setWordWrapWidth(scroll.width / 2 - 110)
-            .setOrigin(0)
-            .setAlign("center")
-
+        this.scene.launch(CST.SCENES.SCROLLONE)
+        this.scene.pause(CST.SCENES.GAME)
     }
 
-    update() { }
+    update(time, delta) {
+        try {
+            // Unsafe method
+            eval(this.CodeHandler.code)
+
+
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
 }
+
+// Increase tick time

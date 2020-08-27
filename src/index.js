@@ -1,7 +1,10 @@
 import Phaser from "phaser";
 
-import GameScene from './scenes/GameScene'
+import CodeHandler from "./utils/CodeHandler";
+
 import Introduction from './scenes/stage/early/Introduction'
+import ScrollOne from './scenes/stage/instructions/ScrollOne'
+import ScrollTwo from './scenes/stage/instructions/ScrollTwo'
 
 //IMPORT MENU SCENE
 let game = new Phaser.Game({
@@ -16,20 +19,89 @@ let game = new Phaser.Game({
     }
   },
   scene: [
-    GameScene, Introduction
+    Introduction, ScrollOne, ScrollTwo
   ],
   render: {
     pixelArt: true
   }
 })
 
-var mainDiv = document.getElementById("rootPage")
-mainDiv.style.display = "flex"
+// Variables
+var consoleButton = document.getElementById("consoleButton");
+var console = document.getElementById("console")
+var runOnce = document.getElementById('submitOnce')
+var scriptButton = document.getElementById("scriptButton")
+var script = document.getElementById("script")
+var submit = document.getElementById("submit")
 
-var editor = document.getElementById("editor")
-editor.style.display = "flex"
-editor.style.flexDirection = "column"
-editor.style.width = "100%"
+// Code Handlers
+const consoleHandler = new CodeHandler()
+const scriptHandler = new CodeHandler()
 
-var code = document.getElementById("code")
-code.style.flexGrow = "4"
+function pageSetup() {
+  function selectInputType(event) {
+    if (event.target.id === "consoleButton") {
+      script.style.display = "none"
+      submit.style.display = "none"
+      console.style.display = "initial"
+      runOnce.style.display = "initial"
+    }
+    if (event.target.id === "scriptButton") {
+      console.style.display = "none"
+      runOnce.style.display = "none"
+      script.style.display = "initial"
+      submit.style.display = "initial"
+    }
+  }
+
+  // Page Setup
+  function setPage() {
+    var mainDiv = document.getElementById("rootPage")
+    mainDiv.style.display = "flex"
+
+    var editor = document.getElementById("editor")
+    editor.style.display = "flex"
+    editor.style.flexDirection = "column"
+    editor.style.width = "100%"
+  }
+
+  // Console Handler
+  function setConsole() {
+    // Tab Button
+    consoleButton.onclick = (e) => selectInputType(e)
+
+    // Text Pane
+    console.style.flexGrow = "4"
+
+    // Set on click
+    runOnce.onclick = () => {
+      console.value
+      consoleHandler.code = textArea
+    }
+  }
+
+  // Script Handler
+  function setScript() {
+    // Script Button
+    scriptButton.onclick = (e) => selectInputType(e)
+
+    // Text Pane
+    script.style.flexGrow = "4"
+    script.style.display = "none"
+    submit.style.display = "none"
+
+    // Set on click
+    submit.onclick = () => {
+      script.value
+      scriptHandler.code = textArea
+    }
+  }
+
+
+  setPage()
+  setConsole()
+  setScript()
+}
+
+pageSetup()
+

@@ -20,14 +20,13 @@ before_script:
    - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
    - unzip awscliv2.zip
    - ./aws/install
-   - npm ci --cache .npm --prefer-offline
 
 installDependencies:
   tags:
     - docker
   stage: install
   script:
-    - npm install
+   - npm install
   only: 
     - master
   
