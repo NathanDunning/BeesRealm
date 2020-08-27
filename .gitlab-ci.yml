@@ -1,8 +1,4 @@
 image: "node:12.6.0"
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - .npm/
   
 stages:
   - install
