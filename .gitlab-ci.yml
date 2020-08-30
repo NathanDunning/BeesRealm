@@ -23,6 +23,9 @@ installDependencies:
   stage: install
   script:
    - npm install
+  artifacts:
+    paths:
+      - node_modules/
   only: 
     - master
   

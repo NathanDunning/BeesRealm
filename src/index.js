@@ -35,8 +35,8 @@ var script = document.getElementById("script")
 var submit = document.getElementById("submit")
 
 // Code Handlers
-const consoleHandler = new CodeHandler()
-const scriptHandler = new CodeHandler()
+global.consoleHandler = new CodeHandler()
+global.scriptHandler = new CodeHandler()
 
 function pageSetup() {
   function selectInputType(event) {
@@ -75,8 +75,8 @@ function pageSetup() {
 
     // Set on click
     runOnce.onclick = () => {
-      console.value
-      consoleHandler.code = textArea
+      global.consoleHandler.code = console.value
+      global.consoleHandler.runClicked = true
     }
   }
 
@@ -93,7 +93,7 @@ function pageSetup() {
     // Set on click
     submit.onclick = () => {
       script.value
-      scriptHandler.code = textArea
+      global.scriptHandler.code = script.value
     }
   }
 
@@ -104,4 +104,3 @@ function pageSetup() {
 }
 
 pageSetup()
-
