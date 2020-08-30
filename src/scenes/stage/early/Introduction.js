@@ -1,11 +1,11 @@
 import 'phaser'
-import CodeHandler from '../../../utils/CodeHandler'
 import { CST } from "../../../CST"
 import { Worker } from "../../../models/Worker";
 import * as _ from 'lodash'
 
 export default class Introduction extends Phaser.Scene {
     worker;
+
 
 
     constructor() {
@@ -92,15 +92,13 @@ export default class Introduction extends Phaser.Scene {
 
     update(time, delta) {
         try {
-            // Unsafe method
-            eval(this.CodeHandler.code)
-
-
+            if (global.consoleHandler.runClicked) {
+                eval(global.consoleHandler.code)
+                global.consoleHandler.runClicked = false
+            }
         } catch (err) {
             console.error(err)
         }
     }
 
 }
-
-// Increase tick time
