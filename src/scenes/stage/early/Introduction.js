@@ -6,8 +6,6 @@ import * as _ from 'lodash'
 export default class Introduction extends Phaser.Scene {
     worker;
 
-
-
     constructor() {
         super({ key: CST.SCENES.GAME })
     }
@@ -96,6 +94,8 @@ export default class Introduction extends Phaser.Scene {
                 eval(global.consoleHandler.code)
                 global.consoleHandler.runClicked = false
             }
+            // TODO: do like a check position and have the move methods update the desired position
+            // WIll have to add a position field in the Bee class
         } catch (err) {
             console.error(err)
         }

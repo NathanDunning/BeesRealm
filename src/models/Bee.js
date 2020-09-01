@@ -11,8 +11,9 @@ export class Bee extends Phaser.Physics.Arcade.Sprite {
 
     // Move Functions
     moveNorth() {
-        this.setVelocityY(-64)
-        setTimeout(() => stop(), 1000)
+        // this.setVelocityY(-64)
+        this.setPosition(this.x, this.y - 32)
+
     }
     moveNorthEast() {
         this.setVelocityY(-64)
