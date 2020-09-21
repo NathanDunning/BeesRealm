@@ -1,8 +1,14 @@
-input 
+input -> value
+
+value
     -> function
+    | conditional
 
 function
     -> model "." command
+    | model "." command ";"
+    | model "." command "\n"
+    | model "." command ";" "\n"
 
 model
     -> "this.worker"
@@ -20,6 +26,16 @@ command
     | "moveWest()"
     | "moveNorthWest()"
     | "stop()"
+
+conditional 
+    ->  statement
+
+statement 
+    -> ifstmt _ elsestmt?
+    | ifstmt _ "else" ifstmt
+
+ifstmt -> "if" _ "(" _ condition _ ")" _ "{" _ expression _ "}" 
+elsestmt -> "else" _ "{" expression "}"
 
 digits -> digit:+
 

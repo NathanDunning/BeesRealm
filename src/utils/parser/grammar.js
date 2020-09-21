@@ -5,8 +5,13 @@ function id(x) { return x[0]; }
 var grammar = {
     Lexer: undefined,
     ParserRules: [
-    {"name": "input", "symbols": ["function"]},
+    {"name": "input$ebnf$1", "symbols": ["function"]},
+    {"name": "input$ebnf$1", "symbols": ["input$ebnf$1", "function"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
+    {"name": "input", "symbols": ["input$ebnf$1"]},
     {"name": "function", "symbols": ["model", {"literal":"."}, "command"]},
+    {"name": "function", "symbols": ["model", {"literal":"."}, "command", {"literal":";"}]},
+    {"name": "function", "symbols": ["model", {"literal":"."}, "command", {"literal":"\n"}]},
+    {"name": "function", "symbols": ["model", {"literal":"."}, "command", {"literal":";"}, {"literal":"\n"}]},
     {"name": "model$string$1", "symbols": [{"literal":"t"}, {"literal":"h"}, {"literal":"i"}, {"literal":"s"}, {"literal":"."}, {"literal":"w"}, {"literal":"o"}, {"literal":"r"}, {"literal":"k"}, {"literal":"e"}, {"literal":"r"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "model", "symbols": ["model$string$1"]},
     {"name": "model$string$2", "symbols": [{"literal":"t"}, {"literal":"h"}, {"literal":"i"}, {"literal":"s"}, {"literal":"."}, {"literal":"g"}, {"literal":"a"}, {"literal":"t"}, {"literal":"h"}, {"literal":"e"}, {"literal":"r"}, {"literal":"e"}, {"literal":"r"}], "postprocess": function joiner(d) {return d.join('');}},

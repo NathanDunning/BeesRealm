@@ -1,7 +1,7 @@
 import 'phaser';
 import { CST } from '../../../CST';
 import { Worker } from '../../../models/Worker';
-import { parse } from '../../../utils/parser/Parser';
+import Parser from '../../../utils/parser/Parser';
 import * as _ from 'lodash';
 
 export default class Introduction extends Phaser.Scene {
@@ -92,8 +92,9 @@ export default class Introduction extends Phaser.Scene {
   update(time, delta) {
     try {
       if (global.consoleHandler.runClicked) {
+        const parser = new Parser();
+        parser.parse(global.consoleHandler.code);
         global.consoleHandler.runClicked = false;
-        parse(global.consoleHandler.code);
       }
       // TODO: do like a check position and have the move methods update the desired position
       // WIll have to add a position field in the Bee class
