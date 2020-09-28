@@ -3,6 +3,7 @@ input -> value
 value
     -> function
     | conditional
+    | value
 
 function
     -> model "." command
@@ -29,17 +30,31 @@ command
 
 conditional 
     ->  statement
+    | loop
 
 statement 
     -> ifstmt _ elsestmt?
-    | ifstmt _ "else" ifstmt
 
 ifstmt -> "if" _ "(" _ condition _ ")" _ "{" _ expression _ "}" 
-elsestmt -> "else" _ "{" expression "}"
+elsestmt -> "else" _ "{" expression "}" ifstmt?
 
+condition -> boolean
+
+loop 
+    -> forloop
+    | whileloop
+
+forloop 
+    -> "for" _ "(" _ "let" _ variable "=" number _ ";" _ variable  _ inequality _ number ";" _ variable modifier ")" "{" _ value "}"
+
+number -> digit | digits
 digits -> digit:+
-
 digit -> [0-9]
+variable -> word | words
+words -> word:+
+word -> [a-z]
+inequality -> "<" | ">" | "==" | "===" | "<=" | ">=" | "!=" | "!==" 
+modifier -> "++" | "--" | "+=" | "-=" 
 
 boolean 
     -> "true"

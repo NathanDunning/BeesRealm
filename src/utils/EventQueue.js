@@ -1,29 +1,27 @@
-function EventQueue() {
-    collection = [];
+export default class EventQueue {
+  collection = [];
 
-    this.print = () => {
-        console.log(collection)
-    }
+  print = () => {
+    console.log(this.collection);
+  };
 
-    this.enqueue = (e) => {
-        collection.push(e)
-    }
+  enqueue = (e) => {
+    this.collection.push(e);
+  };
 
-    this.dequeue = () => {
-        return collection.shift()
-    }
+  dequeue = () => {
+    return this.collection.shift();
+  };
 
-    this.front = () => {
-        return collection[0]
-    }
+  front = () => {
+    return this.collection[0];
+  };
 
-    this.size = () => {
-        return collection.length
-    }
+  size = () => {
+    return this.collection.length;
+  };
 
-    this.isEmpty = () => {
-        return (collection.length === 0)
-    }
+  isEmpty = () => {
+    return this.collection.length === 0;
+  };
 }
-
-export default EventQueue

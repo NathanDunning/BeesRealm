@@ -1,11 +1,11 @@
 import 'phaser';
 import { CST } from '../../../CST';
 import { Worker } from '../../../models/Worker';
-import Parser from '../../../utils/parser/Parser';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 export default class Introduction extends Phaser.Scene {
   worker;
+  button;
 
   constructor() {
     super({ key: CST.SCENES.GAME });
@@ -81,6 +81,9 @@ export default class Introduction extends Phaser.Scene {
     //add initial bee
     this.worker = new Worker(this);
 
+    // bind button
+    this.button = document.getElementById('submitOnce');
+
     //collisions
     this.physics.add.collider(this.worker, wall);
     wall.setCollisionByProperty({ collides: true });
@@ -89,15 +92,24 @@ export default class Introduction extends Phaser.Scene {
     this.scene.pause(CST.SCENES.GAME);
   }
 
-  update(time, delta) {
+  async update(time, delta) {
+    const sleep = async (ms) => {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    };
     try {
       if (global.consoleHandler.runClicked) {
-        const parser = new Parser();
-        parser.parse(global.consoleHandler.code);
+        this.button.disabled = true;
         global.consoleHandler.runClicked = false;
+
+        eval(global.consoleHandler.code);
+        while (!global.eventQueue.isEmpty()) {
+          const func = global.eventQueue.dequeue();
+          await func();
+          await sleep(500);
+        }
+
+        this.button.disabled = false;
       }
-      // TODO: do like a check position and have the move methods update the desired position
-      // WIll have to add a position field in the Bee class
     } catch (err) {
       console.error(err);
     }
