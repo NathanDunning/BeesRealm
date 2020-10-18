@@ -48,6 +48,8 @@ buildProject:  # A job to build the static website
 
 testCode:
   stage: test
+  script:
+    - echo "testing stage here"
 
 deployToS3:
   tags:
