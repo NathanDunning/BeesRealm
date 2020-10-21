@@ -3,6 +3,7 @@ image: "node:12.6.0"
 stages:
   - install
   - build
+  - test
   - deploy
 
 variables:
@@ -44,6 +45,13 @@ buildProject:  # A job to build the static website
       - build/
   only: 
     - master
+
+testCode:
+  tags:
+    - docker
+  stage: test
+  script:
+    - echo "testing stage here"
 
 deployToS3:
   tags:
