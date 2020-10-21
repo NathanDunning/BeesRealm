@@ -36,8 +36,9 @@ buildProject:  # A job to build the static website
   script:
     - npm run build
     - mkdir build
+    - mkdir build/assets
     - mv dist/* build/
-    - cp -r assets/* build/
+    - cp -r assets/* build/assets/
   artifacts:
     paths:
       - build/

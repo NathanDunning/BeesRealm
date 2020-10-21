@@ -1,53 +1,49 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      /* Style the tab */
+      .tab {
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+      }
 
-<head>
-  <meta charset="utf-8">
-  <style>
-    /* Style the tab */
-    .tab {
-      border: 1px solid #ccc;
-      background-color: #f1f1f1;
-    }
+      /* Style the buttons inside the tab */
+      .tab button {
+        background-color: inherit;
+        border: none;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 17px;
+      }
 
-    /* Style the buttons inside the tab */
-    .tab button {
-      background-color: inherit;
-      border: none;
-      padding: 14px 16px;
-      transition: 0.3s;
-      font-size: 17px;
-    }
+      /* Change background color of buttons on hover */
+      .tab button:hover {
+        background-color: #ddd;
+      }
 
-    /* Change background color of buttons on hover */
-    .tab button:hover {
-      background-color: #ddd;
-    }
+      /* Create an active/current tablink class */
+      .tab button.active {
+        background-color: #ccc;
+      }
+    </style>
+  </head>
 
-    /* Create an active/current tablink class */
-    .tab button.active {
-      background-color: #ccc;
-    }
-  </style>
-</head>
+  <body>
+    <div id="rootPage">
+      <div id="phaser"></div>
+      <div id="editor">
+        <div class="tab">
+          <button id="consoleButton" class="tablinks">Console</button>
+          <button id="scriptButton" class="tablinks">Reset</button>
+        </div>
 
-<body>
-  <div id="rootPage">
-    <div id="phaser"></div>
-    <div id="editor">
-      <div class="tab">
-        <button id="consoleButton" class="tablinks">Console</button>
-        <button id="scriptButton" class="tablinks">Script</button>
+        <textarea id="console"></textarea>
+        <!-- <textarea id="script"></textarea> -->
+        <button id="submitOnce">Run Once</button>
+        <!-- <button id="submit">Run</button> -->
       </div>
-
-      <textarea id="console"></textarea>
-      <textarea id="script"></textarea>
-      <button id="submitOnce">Run Once</button>
-      <button id="submit">Run</button>
-
     </div>
-  </div>
-
-</body>
-
+  </body>
 </html>

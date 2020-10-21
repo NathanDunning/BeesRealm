@@ -1,8 +1,10 @@
 export const CST = {
-    SCENES: {
-        MENU: "MENU",
-        GAME: "GAME",
-        SCROLLONE: "SCROLLONE",
-        SCROLLTWO: "SCROLLTWO",
-    }
-}
+  SCENES: {
+    MENU: 'MENU',
+    GAME: 'GAME',
+    SCROLLONE: 'SCROLLONE',
+    SCROLLTWO: 'SCROLLTWO',
+    SCROLLTHREE: 'SCROLLTHREE',
+    COMPLETED: 'COMPLETED',
+  },
+};
