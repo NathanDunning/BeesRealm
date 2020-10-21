@@ -24,4 +24,8 @@ export default class EventQueue {
   isEmpty = () => {
     return this.collection.length === 0;
   };
+
+  clear = () => {
+    this.collection.splice(0, this.collection.length);
+  };
 }

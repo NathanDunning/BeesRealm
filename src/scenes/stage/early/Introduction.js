@@ -78,6 +78,31 @@ export default class Introduction extends Phaser.Scene {
       });
     });
 
+    spawn.layer.data.forEach((row, ridx) => {
+      row.forEach((col, cidx) => {
+        if (col.index !== -1) {
+          global.spawnTile = {
+            width: col.width,
+            height: col.height,
+            x: col.x,
+            y: col.y,
+            xPixel: col.pixelX,
+            yPixel: col.pixelY,
+          };
+        }
+      });
+    });
+
+    global.pollenArr = [];
+
+    pollen.layer.data.forEach((row) => {
+      row.forEach((col, cidx) => {
+        if (col.index !== -1) {
+          global.pollenArr.push(col);
+        }
+      });
+    });
+
     //add initial bee
     this.worker = new Worker(this);
 
@@ -93,19 +118,41 @@ export default class Introduction extends Phaser.Scene {
   }
 
   async update(time, delta) {
+    const self = this;
+
     const sleep = async (ms) => {
       return new Promise((resolve) => setTimeout(resolve, ms));
     };
+
+    if (global.reset) {
+      global.eventQueue.clear();
+      this.worker.stop();
+      this.worker.x = global.spawnTile.xPixel;
+      this.worker.y = global.spawnTile.yPixel;
+      global.reset = false;
+    }
+
     try {
       if (global.consoleHandler.runClicked) {
         this.button.disabled = true;
         global.consoleHandler.runClicked = false;
 
         eval(global.consoleHandler.code);
+        console.log(this.worker.x, this.worker.y);
         while (!global.eventQueue.isEmpty()) {
           const func = global.eventQueue.dequeue();
           await func();
-          await sleep(500);
+          await sleep(512);
+          global.pollenArr.forEach((tile) => {
+            if (
+              tile.pixelX === this.worker.x &&
+              tile.pixelY === this.worker.y
+            ) {
+              this.scene.launch(CST.SCENES.COMPLETED);
+              this.scene.pause(CST.SCENES.GAME);
+            }
+          });
+          console.log(this.worker.x, this.worker.y);
         }
 
         this.button.disabled = false;

@@ -7,7 +7,10 @@ import Introduction from './scenes/stage/early/Introduction';
 import ScrollOne from './scenes/stage/instructions/ScrollOne';
 import ScrollTwo from './scenes/stage/instructions/ScrollTwo';
 
+import Completed from './scenes/stage/instructions/Completed';
+
 import 'babel-polyfill';
+import ScrollThree from './scenes/stage/instructions/ScrollThree';
 
 //IMPORT MENU SCENE
 let game = new Phaser.Game({
@@ -21,7 +24,7 @@ let game = new Phaser.Game({
       debug: true,
     },
   },
-  scene: [Introduction, ScrollOne, ScrollTwo],
+  scene: [Introduction, ScrollOne, ScrollTwo, ScrollThree, Completed],
   render: {
     pixelArt: true,
   },
@@ -31,6 +34,8 @@ let game = new Phaser.Game({
 global.consoleHandler = new CodeHandler();
 // Event Queue
 global.eventQueue = new EventQueue();
+// State Handler
+global.reset = false;
 
 // Variables
 var consoleButton = document.getElementById('consoleButton');
@@ -45,12 +50,9 @@ function pageSetup() {
       console.style.display = 'initial';
       runOnce.style.display = 'initial';
     }
-    // if (event.target.id === "scriptButton") {
-    //   console.style.display = "none"
-    //   runOnce.style.display = "none"
-    //   script.style.display = "initial"
-    //   submit.style.display = "initial"
-    // }
+    if (event.target.id === 'scriptButton') {
+      global.reset = true;
+    }
   }
 
   // Page Setup
@@ -79,26 +81,15 @@ function pageSetup() {
     };
   }
 
-  // Script Handler
-  // function setScript() {
-  //   // Script Button
-  //   scriptButton.onclick = (e) => selectInputType(e)
-
-  //   // Text Pane
-  //   script.style.flexGrow = "4"
-  //   script.style.display = "none"
-  //   submit.style.display = "none"
-
-  //   // Set on click
-  //   submit.onclick = () => {
-  //     script.value
-  //     global.scriptHandler.code = script.value
-  //   }
-  // }
+  // reset handler
+  function setScript() {
+    // Script Button
+    scriptButton.onclick = (e) => selectInputType(e);
+  }
 
   setPage();
   setConsole();
-  //setScript()
+  setScript();
 }
 
 pageSetup();

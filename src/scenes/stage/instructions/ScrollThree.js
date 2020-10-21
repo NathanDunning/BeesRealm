@@ -1,24 +1,21 @@
 import 'phaser';
 import { CST } from '../../../CST';
 
-export default class ScrollOne extends Phaser.Scene {
+export default class ScrollThree extends Phaser.Scene {
   constructor() {
-    super({ key: CST.SCENES.SCROLLONE });
+    super({ key: CST.SCENES.SCROLLTHREE });
     this.parent = parent;
   }
 
   preload() {
-    this.load.image('spawn', './assets/image/spawn.png');
-    this.load.image('pollen', './assets/image/pollen.png');
+    this.load.image('gatherer', '/assets/sprite/gatherer.png');
     this.load.image('scroll', '/assets/image/scroll.png');
     this.load.image('okay', '/assets/image/okay.png');
-    this.load.image('next', '/assets/image/next.png');
     this.load.image('back', '/assets/image/back.png');
   }
 
   create() {
     // Loading the scroll
-    //
     // find center
     let centerX = this.game.config.width / 2;
     let centerY = this.game.config.height / 2;
@@ -29,22 +26,29 @@ export default class ScrollOne extends Phaser.Scene {
       .setDepth(2)
       .setScale(0.5);
 
-    // add next button
+    // add back button
     var button = this.add
-      .image(centerX + 80, centerY + 240, 'next')
+      .image(centerX - 80, centerY + 240, 'back')
       .setDepth(3);
     button.setInteractive();
     button.on('pointerup', () => {
-      this.scene.stop(CST.SCENES.SCROLLONE);
+      this.scene.stop(CST.SCENES.SCROLLTHREE);
       this.scene.launch(CST.SCENES.SCROLLTWO);
     });
 
-    var spawn = this.add.image(centerX, centerY - 20, 'spawn').setDepth(3);
-    var pollen = this.add.image(centerX, centerY + 120, 'pollen').setDepth(3);
+    // add next button
+    var button = this.add
+      .image(centerX + 80, centerY + 240, 'okay')
+      .setDepth(3);
+    button.setInteractive();
+    button.on('pointerup', () => {
+      this.scene.resume(CST.SCENES.GAME);
+      this.scene.stop(CST.SCENES.INTRODUCTION);
+    });
 
     // add text
     const sceneText =
-      'Welcome to BeesRealm \n\nBehind this scroll is the game map where bees will spawn.\n\nThe spawn point can be identified by the white tile below.\n\n\n\nPollen is the power source for bees and can be identified by the red tiles shown below.';
+      'Here are the eight functions available to use:\n\n\nthis.worker.moveNorth()\nthis.worker.moveEast()\nthis.worker.moveSouth()\nthis.worker.moveWest()\n\nthis.worker.moveNorthEast()\nthis.worker.moveNorthWest()\nthis.worker.moveSouthEast()\nthis.worker.moveSouthWest()';
 
     var textConfig = {
       fontSize: '20px',
@@ -54,7 +58,7 @@ export default class ScrollOne extends Phaser.Scene {
 
     this.add
       .text(
-        scroll.getTopLeft().x + 60,
+        scroll.getTopLeft().x + 80,
         scroll.getTopLeft().y + scroll.width / 10,
         sceneText,
         textConfig

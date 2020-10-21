@@ -1,18 +1,15 @@
 import 'phaser';
 import { CST } from '../../../CST';
 
-export default class ScrollOne extends Phaser.Scene {
+export default class Completed extends Phaser.Scene {
   constructor() {
-    super({ key: CST.SCENES.SCROLLONE });
+    super({ key: CST.SCENES.COMPLETED });
     this.parent = parent;
   }
 
   preload() {
-    this.load.image('spawn', './assets/image/spawn.png');
-    this.load.image('pollen', './assets/image/pollen.png');
     this.load.image('scroll', '/assets/image/scroll.png');
     this.load.image('okay', '/assets/image/okay.png');
-    this.load.image('next', '/assets/image/next.png');
     this.load.image('back', '/assets/image/back.png');
   }
 
@@ -35,16 +32,12 @@ export default class ScrollOne extends Phaser.Scene {
       .setDepth(3);
     button.setInteractive();
     button.on('pointerup', () => {
-      this.scene.stop(CST.SCENES.SCROLLONE);
-      this.scene.launch(CST.SCENES.SCROLLTWO);
+      // Next stage
     });
-
-    var spawn = this.add.image(centerX, centerY - 20, 'spawn').setDepth(3);
-    var pollen = this.add.image(centerX, centerY + 120, 'pollen').setDepth(3);
 
     // add text
     const sceneText =
-      'Welcome to BeesRealm \n\nBehind this scroll is the game map where bees will spawn.\n\nThe spawn point can be identified by the white tile below.\n\n\n\nPollen is the power source for bees and can be identified by the red tiles shown below.';
+      "Congratulations, you completed the task:\n\n 'Collect One Pollen'";
 
     var textConfig = {
       fontSize: '20px',
